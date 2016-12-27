@@ -4,13 +4,13 @@ const server = "wss://localhost:" + config.server.port;
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-function playThrough(){
+function playThrough(i){
 
     const socket = new ws(server);
 
     socket.on("open", () => {
         setTimeout(() => {
-            socket.send("luuulz 1");
+            socket.send("luuulz " + i, (e) => {if(e){console.log(e);}});
             setTimeout(() => {
             socket.close();
             }, 100);
@@ -27,5 +27,5 @@ function playThrough(){
 }
 
 setInterval(() => {
-    playThrough();
+    [1,2,3,4,5].forEach(i => playThrough(i));
 }, 220);

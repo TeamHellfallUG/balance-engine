@@ -23,44 +23,63 @@ const opts = {
     cert: path.join(__dirname, "./cert.pem")
 };
 
-const proxy = new Proxy({
-    servers: upstreams,
-    config: {
-        port: config.server.port,
-        useSsl: true,
-        opts: opts
-    }
-});
+const mode = process.argv[2];
 
-let servers = null;
+if(!mode){
+    console.log("requires an argument [proxy, server].");
+    return;
+}
 
-proxy.run().then(() => {
+switch(mode){
 
-    console.log("proxy running..");
+    case "proxy":
 
-    servers = upstreams.map(upstream => new Server(getServerConfig(upstream.port)));
-    return Promise.all(servers.map(server => server.open()));
-}).then(() => {
-
-    console.log("servers are up.");
-
-    servers.forEach(server => {
-
-        server.on("connection", client => {
-            server.broadcastGlobal("whats uppp " + client.clientId);
+        const proxy = new Proxy({
+            servers: upstreams,
+            config: {
+                port: config.server.port,
+                useSsl: true,
+                opts: opts
+            },
+            log: console.log
         });
 
-        server.on("message", (clientId, message, originId) => {
-            server.send(clientId, "hi there! => " + message);
+        proxy.run().then(() => {
+            console.log("proxy running..");
+        }).catch(e => {
+            console.log(e);
         });
-    });
+        break;
 
-    setTimeout(() => {
-        servers[1].close();
-        servers[2].close();
-        servers[3].close();
-    }, 3000);
+    case "server":
+        const servers = upstreams.map(upstream => new Server(getServerConfig(upstream.port)));
+        Promise.all(servers.map(server => server.open())).then(() => {
 
-}).catch(e => {
-    console.log(e);
-});
+            console.log("servers are up.");
+
+            servers.forEach(server => {
+
+                server.on("connection", client => {
+                    server.broadcastGlobal("whats uppp " + client.clientId);
+                });
+
+                server.on("message", (clientId, message) => {
+                    server.send(clientId, "hi there! => " + message + " from " + server.originId);
+                });
+            });
+
+            setTimeout(() => {
+                servers[1].close();
+                servers[2].close();
+                servers[3].close();
+            }, 3000);
+
+        }).catch(e => {
+            console.log(e);
+        });
+        break;
+
+    default:
+        console.log(mode + " is not recognized use proxy or server.");
+        break;
+}

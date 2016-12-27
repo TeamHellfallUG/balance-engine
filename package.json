@@ -2,10 +2,13 @@
   "name": "balance-engine",
   "version": "0.3.5",
   "scripts": {
-    "start": "node example/index.js",
+    "start": "node example/single.js",
     "client": "node example/client.js",
-    "with-proxy": "node example/multi.js",
-    "proxy-client": "node example/multi-client.js"
+    "proxy": "node example/multi.js proxy",
+    "server": "node example/multi.js server",
+    "proxy-client": "node example/multi-client.js",
+    "create-cert": "chmod 777 ./create-cert.sh && ./create-cert.sh",
+    "delete-cert": "rm -f ./example/*.pem"
   },
   "dependencies": {
     "http-proxy": "^1.16.2",
