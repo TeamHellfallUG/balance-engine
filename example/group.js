@@ -1,22 +1,25 @@
-const {Server} = require("./../index.js");
+const {GroupServer} = require("./../index.js");
 const config = require("./config.json");
 
 const serverConfig = JSON.parse(JSON.stringify(config.server));
 serverConfig.log = console.log;
 
-const server = new Server(serverConfig);
+const server = new GroupServer(serverConfig);
 server.open().then(() => {
 
     console.log("open.");
-    
+
     server.on("connection", client => {
         console.log(client);
-        server.broadcastGlobal("whats uppp " + client.clientId);
     });
 
+    /*
     server.on("message", (clientId, message) => {
         console.log("derp => " + message);
-        server.send(clientId, "hi there! => " + message);
+    }); */
+
+    server.on("jmessage", (clientId, message) => {
+        console.log(message);
     });
 
     server.on("close", client => {

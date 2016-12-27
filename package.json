@@ -8,7 +8,9 @@
     "server": "node example/multi.js server",
     "proxy-client": "node example/multi-client.js",
     "create-cert": "chmod 777 ./create-cert.sh && ./create-cert.sh",
-    "delete-cert": "rm -f ./example/*.pem"
+    "delete-cert": "rm -f ./example/*.pem",
+    "group": "node example/group.js",
+    "group-client": "node example/group-client.js"
   },
   "dependencies": {
     "http-proxy": "^1.16.2",
