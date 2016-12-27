@@ -1,0 +1,12 @@
+{
+    "server": {
+        "port": 8443,
+        "redis": {
+            "host": "localhost",
+            "port": 6379,
+            "family": 4,
+            "db": 0,
+            "prefix": "thf:wes:"
+        }
+    }
+}

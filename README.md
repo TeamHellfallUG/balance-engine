@@ -1,2 +1,3 @@
 # balance-engine
-hassle free websocket scaling
+- hassle free websocket scaling
+- WIP
