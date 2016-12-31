@@ -1,8 +1,10 @@
 {
   "name": "balance-engine",
   "version": "0.3.5",
+  "main": "./index.js",
   "scripts": {
     "start": "node example/single.js",
+    "test": "istanbul cover _mocha -- -R spec test/int/* && istanbul check-coverage --statements 60",
     "client": "node example/client.js",
     "proxy": "node example/multi.js proxy",
     "server": "node example/multi.js server",
@@ -20,6 +22,9 @@
     "uws": "^0.12.0"
   },
   "devDependencies": {
-    "ws": "*"
+    "ws": "*",
+    "expect.js": "~0.3.1",
+    "mocha": "~1.18.2",
+    "istanbul": "~0.4.2"
   }
 }

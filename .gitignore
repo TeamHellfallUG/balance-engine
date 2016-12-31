@@ -3,3 +3,5 @@ key.pem
 npm-debug.log
 /node_modules
 .idea
+coverage
+logs
