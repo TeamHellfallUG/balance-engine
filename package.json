@@ -1,6 +1,6 @@
 {
   "name": "balance-engine",
-  "version": "0.4.1",
+  "version": "0.6.1",
   "main": "./index.js",
   "scripts": {
     "start": "node example/single.js",
