@@ -1,7 +1,6 @@
 const ws = require("ws");
 const config = require("./config.json");
 const server = "ws://localhost:" + config.server.port;
-const socket = new ws(server);
 
 function getJMessage(type, content, header){
 
@@ -19,26 +18,48 @@ function getJMessage(type, content, header){
     };
 }
 
-socket.on("open", () => {
-    setTimeout(() => {
+function newSocket(){
+
+    const socket = new ws(server);
+
+    socket.on("open", () => {
+        setTimeout(() => {
+            socket.send(JSON.stringify(getJMessage("internal", {
+                position: {
+                    x: 10,
+                    y: 12,
+                    z: 15
+                }
+            }, "VGS:POSITION")));
+        }, 1000);
+    });
+
+    socket.on("message", message => {
+        console.log("message: " + message);
+    });
+
+    socket.on("error", message => {
+        console.log("error: " + message);
+    });
+
+    socket.on("close", message => {
+        console.log("close: " + message);
+    });
+
+    socket.test_bla = function(){
         socket.send(JSON.stringify(getJMessage("internal", {
-            position: {
-                x: 10,
-                y: 12,
-                z: 15
+            payload: {
+                wurst: "kaese",
+                schinken: "fleisch"
             }
-        }, "VGS:POSITION")));
-    }, 1000);
-});
+        }, "VGS:BROADCAST")));
+    };
 
-socket.on("message", message => {
-    console.log("message: " + message);
-});
+    return socket;
+}
 
-socket.on("error", message => {
-    console.log("error: " + message);
-});
+const socket = newSocket();
 
-socket.on("close", message => {
-    console.log("close: " + message);
-});
+setTimeout(() => {
+    socket.test_bla();
+}, 1500);
