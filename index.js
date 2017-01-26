@@ -1,5 +1,6 @@
 const Server = require("./lib/Server.js");
-const Proxy = require("./lib/Proxy.js");
+const WSProxy = require("./lib/balance/WSProxy.js");
+const UDPProxy = require("./lib/balance/UDPProxy.js");
 const GroupServer = require("./lib/GroupServer.js");
 const JsonMessageLayerServer = require("./lib/JsonMessageLayerServer.js");
 const SimpleClient = require("./client/Simple.js");
@@ -8,7 +9,8 @@ const RoomGroupServer = require("./lib/RoomGroupServer.js");
 
 module.exports = {
     Server,
-    Proxy,
+    WSProxy,
+    UDPProxy,
     GroupServer,
     JsonMessageLayerServer,
     SimpleClient,

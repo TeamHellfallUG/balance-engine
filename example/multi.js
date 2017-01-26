@@ -1,4 +1,4 @@
-const {Server, Proxy} = require("./../index.js");
+const {Server, WSProxy} = require("./../index.js");
 const config = require("./config.json");
 const path = require("path");
 
@@ -34,7 +34,7 @@ switch(mode){
 
     case "proxy":
 
-        const proxy = new Proxy({
+        const proxy = new WSProxy({
             servers: upstreams,
             config: {
                 port: config.server.port,
