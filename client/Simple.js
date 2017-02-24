@@ -12,6 +12,14 @@ const IMSG = {
     BROADCAST: PREFIX + "BROADCAST"
 };
 
+const RG_PREFIX = "RGS:";
+const RG_IMSG = {
+    BROADCAST: RG_PREFIX + "BROADCAST",
+    SEARCH: RG_PREFIX + "SEARCH",
+    LEAVE: RG_PREFIX + "LEAVE",
+    CONFIRM: RG_PREFIX + "CONFIRM"
+};
+
 class Client extends EventEmitter {
 
     constructor({host, port, log}){
@@ -20,6 +28,7 @@ class Client extends EventEmitter {
         this.socket = null;
         this._log = log;
         this.Group = this._getGroupOptions();
+        this.Room = this._getRoomOptions();
     }
 
     log(message){
@@ -45,6 +54,31 @@ class Client extends EventEmitter {
 
     send(type, message, header = false){
         return this._sendPromise(Client._getJOS(type, message, header));
+    }
+
+    _getRoomOptions() {
+
+        const options = {};
+
+        options.search = () => {
+            return this._sendInternal({}, RG_IMSG.SEARCH);
+        };
+
+        options.broadcast = message => {
+            return this._sendInternal({
+                delivery: message
+            }, RG_IMSG.BROADCAST);
+        };
+
+        options.leave = () => {
+            return this._sendInternal({}, RG_IMSG.LEAVE);
+        };
+
+        options.confirm = () => {
+            return this._sendInternal({}, RG_IMSG.CONFIRM);
+        };
+
+        return options;
     }
 
     _getGroupOptions() {
@@ -104,6 +138,7 @@ class Client extends EventEmitter {
             }
 
             this.socket.send(data, (error, result) => {
+
                 if(error){
                     this.log(error.message);
                     return reject(error);
