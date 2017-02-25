@@ -1,3 +1,5 @@
+"use strict";
+
 const Server = require("./lib/Server.js");
 const WSProxy = require("./lib/balance/WSProxy.js");
 const UDPProxy = require("./lib/balance/UDPProxy.js");

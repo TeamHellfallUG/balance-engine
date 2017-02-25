@@ -22,6 +22,10 @@ const RG_IMSG = {
     START: RG_PREFIX + "START"
 };
 
+/**
+ * although this client works quite well, it is not designed to be used for anything else
+ * than testing
+ */
 class Client extends EventEmitter {
 
     constructor({host, port, log}){
