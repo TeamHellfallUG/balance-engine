@@ -17,6 +17,7 @@
     "vector-client": "node example/vector-client.js"
   },
   "dependencies": {
+    "avsc": "^4.1.11",
     "http-proxy": "~1.16.2",
     "ioredis": "~2.4.3",
     "request": "~2.79.0",
