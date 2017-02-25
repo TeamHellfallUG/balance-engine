@@ -55,6 +55,19 @@ describe("RoomServer Integration", function(){
 
             client.on("jmessage", message => {
                 console.log("client1: " + JSON.stringify(message));
+
+                if(message.type === "internal"){
+
+                    if(message.header === client.RG_IMSG.CONFIRM){
+                        console.log("client1 received confirm, sending confirm.");
+                        client.Room.confirm(message.content.matchId).then(_ => {});
+                    }
+
+                    if(message.header === client.RG_IMSG.START){
+                        console.log("client1 server send start packet for match.");
+                        client.matchStarted = true;
+                    }
+                }
             });
 
             client.Room.search().then(_ => {
@@ -73,6 +86,19 @@ describe("RoomServer Integration", function(){
 
             client2.on("jmessage", message => {
                 console.log("client2: " + JSON.stringify(message));
+
+                if(message.type === "internal"){
+
+                    if(message.header === client.RG_IMSG.CONFIRM){
+                        console.log("client2 received confirm, sending confirm.");
+                        client2.Room.confirm(message.message.matchId).then(_ => {});
+                    }
+
+                    if(message.header === client.RG_IMSG.START){
+                        console.log("client2 server send start packet for match.");
+                        client2.matchStarted = true;
+                    }
+                }
             });
 
             client2.Room.search().then(_ => {
@@ -91,6 +117,19 @@ describe("RoomServer Integration", function(){
 
             client3.on("jmessage", message => {
                 console.log("client3: " + JSON.stringify(message));
+
+                if(message.type === "internal"){
+
+                    if(message.header === client.RG_IMSG.CONFIRM){
+                        console.log("client3 received confirm, sending confirm.");
+                        client3.Room.confirm(message.message.matchId).then(_ => {});
+                    }
+
+                    if(message.header === client.RG_IMSG.START){
+                        console.log("client3 server send start packet for match.");
+                        client3.matchStarted = true;
+                    }
+                }
             });
 
             client3.Room.search().then(_ => {
@@ -109,6 +148,19 @@ describe("RoomServer Integration", function(){
 
             client4.on("jmessage", message => {
                 console.log("client4: " + JSON.stringify(message));
+
+                if(message.type === "internal"){
+
+                    if(message.header === client.RG_IMSG.CONFIRM){
+                        console.log("client4 received confirm, sending confirm.");
+                        client4.Room.confirm(message.message.matchId).then(_ => {});
+                    }
+
+                    if(message.header === client.RG_IMSG.START){
+                        console.log("client4 server send start packet for match.");
+                        client4.matchStarted = true;
+                    }
+                }
             });
 
             client4.Room.search().then(_ => {
@@ -127,6 +179,19 @@ describe("RoomServer Integration", function(){
 
             client5.on("jmessage", message => {
                 console.log("client5: " + JSON.stringify(message));
+
+                if(message.type === "internal"){
+
+                    if(message.header === client.RG_IMSG.CONFIRM){
+                        console.log("client5 received confirm, sending confirm.");
+                        client5.Room.confirm(message.message.matchId).then(_ => {});
+                    }
+
+                    if(message.header === client.RG_IMSG.START){
+                        console.log("client5 server send start packet for match.");
+                        client5.matchStarted = true;
+                    }
+                }
             });
 
             client5.Room.search().then(_ => {
@@ -182,7 +247,30 @@ describe("RoomServer Integration", function(){
         setTimeout(done, 200);
     });
 
-    //TODO handle logic of confirmation here
+    it("should be able to execute mm confirmation logic manually", function(done){
+        server.executeMatchConfirmationLogic().then(_ => {
+            done();
+        }).catch(e => {
+            console.log(e);
+            //dont call done here..
+        });
+    });
+
+    it("awaiting packets..(mm start)", function(done){
+        setTimeout(done, 200);
+    });
+
+    it("should see the correct match status on clients", function(done){
+
+        expect(client.matchStarted).to.be.equal(undefined);
+        expect(client2.matchStarted).to.be.equal(undefined);
+
+        expect(client3.matchStarted).to.be.equal(true);
+        expect(client4.matchStarted).to.be.equal(true);
+        expect(client5.matchStarted).to.be.equal(true);
+
+        done();
+    });
 
     it("await final packets..", function(done){
         setTimeout(() => {

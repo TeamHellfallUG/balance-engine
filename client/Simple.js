@@ -17,7 +17,9 @@ const RG_IMSG = {
     BROADCAST: RG_PREFIX + "BROADCAST",
     SEARCH: RG_PREFIX + "SEARCH",
     LEAVE: RG_PREFIX + "LEAVE",
-    CONFIRM: RG_PREFIX + "CONFIRM"
+    CONFIRM: RG_PREFIX + "CONFIRM",
+    DISBAND: RG_PREFIX + "DISBAND",
+    START: RG_PREFIX + "START"
 };
 
 class Client extends EventEmitter {
@@ -27,8 +29,12 @@ class Client extends EventEmitter {
         this.conStr = `ws://${host}:${port}`;
         this.socket = null;
         this._log = log;
+
         this.Group = this._getGroupOptions();
         this.Room = this._getRoomOptions();
+
+        this.IMSG = IMSG;
+        this.RG_IMSG = RG_IMSG;
     }
 
     log(message){
@@ -74,8 +80,10 @@ class Client extends EventEmitter {
             return this._sendInternal({}, RG_IMSG.LEAVE);
         };
 
-        options.confirm = () => {
-            return this._sendInternal({}, RG_IMSG.CONFIRM);
+        options.confirm = (matchId) => {
+            return this._sendInternal({
+                matchId
+            }, RG_IMSG.CONFIRM);
         };
 
         return options;
@@ -154,15 +162,18 @@ class Client extends EventEmitter {
         this.socket.on("message", message => {
             super.emit("message", message);
 
+            let jmessage = null;
             try {
-                const jmessage = JSON.parse(message);
-                if(jmessage){
-                    super.emit("jmessage", jmessage);
-                    return;
-                }
+                jmessage = JSON.parse(message);
             } catch(e){
                 this.log("failed to parse json message: " + message);
             }
+
+            if(jmessage){
+                super.emit("jmessage", jmessage);
+                return;
+            }
+
             this.log("message was empty.");
         });
 
