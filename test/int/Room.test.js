@@ -51,6 +51,7 @@ describe("RoomServer Integration", function(){
     it("should be able to start & connect the client", function(done){
 
         client = new SimpleClient(clientConfig);
+        client.stateUpdates = 0;
         client.open().then(() => {
 
             client.on("jmessage", message => {
@@ -67,6 +68,15 @@ describe("RoomServer Integration", function(){
                         console.log("client1 server send start packet for match.");
                         client.matchStarted = true;
                     }
+
+                    if(message.header === client.RG_IMSG.STATE_UPDATE){
+                        client.stateUpdates++;
+                        client.lastState = message.message.states;
+                    }
+
+                    if(message.header === client.RG_IMSG.END){
+                        client.matchEnded = true;
+                    }
                 }
             });
 
@@ -82,6 +92,7 @@ describe("RoomServer Integration", function(){
             console.log("client2: " + msg);
         };
         client2 = new SimpleClient(clientConfig);
+        client2.stateUpdates = 0;
         client2.open().then(() => {
 
             client2.on("jmessage", message => {
@@ -98,6 +109,15 @@ describe("RoomServer Integration", function(){
                         console.log("client2 server send start packet for match.");
                         client2.matchStarted = true;
                     }
+
+                    if(message.header === client.RG_IMSG.STATE_UPDATE){
+                        client2.stateUpdates++;
+                        client2.lastState = message.message.states;
+                    }
+
+                    if(message.header === client.RG_IMSG.END){
+                        client2.matchEnded = true;
+                    }
                 }
             });
 
@@ -113,6 +133,7 @@ describe("RoomServer Integration", function(){
             console.log("client3: " + msg);
         };
         client3 = new SimpleClient(clientConfig);
+        client3.stateUpdates = 0;
         client3.open().then(() => {
 
             client3.on("jmessage", message => {
@@ -129,6 +150,15 @@ describe("RoomServer Integration", function(){
                         console.log("client3 server send start packet for match.");
                         client3.matchStarted = true;
                     }
+
+                    if(message.header === client.RG_IMSG.STATE_UPDATE){
+                        client3.stateUpdates++;
+                        client3.lastState = message.message.states;
+                    }
+
+                    if(message.header === client.RG_IMSG.END){
+                        client3.matchEnded = true;
+                    }
                 }
             });
 
@@ -144,6 +174,7 @@ describe("RoomServer Integration", function(){
             console.log("client4: " + msg);
         };
         client4 = new SimpleClient(clientConfig);
+        client4.stateUpdates = 0;
         client4.open().then(() => {
 
             client4.on("jmessage", message => {
@@ -160,6 +191,15 @@ describe("RoomServer Integration", function(){
                         console.log("client4 server send start packet for match.");
                         client4.matchStarted = true;
                     }
+
+                    if(message.header === client.RG_IMSG.STATE_UPDATE){
+                        client4.stateUpdates++;
+                        client4.lastState = message.message.states;
+                    }
+
+                    if(message.header === client.RG_IMSG.END){
+                        client4.matchEnded = true;
+                    }
                 }
             });
 
@@ -175,6 +215,7 @@ describe("RoomServer Integration", function(){
             console.log("client5: " + msg);
         };
         client5 = new SimpleClient(clientConfig);
+        client5.stateUpdates = 0;
         client5.open().then(() => {
 
             client5.on("jmessage", message => {
@@ -190,6 +231,15 @@ describe("RoomServer Integration", function(){
                     if(message.header === client.RG_IMSG.START){
                         console.log("client5 server send start packet for match.");
                         client5.matchStarted = true;
+                    }
+
+                    if(message.header === client.RG_IMSG.STATE_UPDATE){
+                        client5.stateUpdates++;
+                        client5.lastState = message.message.states;
+                    }
+
+                    if(message.header === client.RG_IMSG.END){
+                        client5.matchEnded = true;
                     }
                 }
             });
@@ -268,6 +318,74 @@ describe("RoomServer Integration", function(){
         expect(client3.matchStarted).to.be.equal(true);
         expect(client4.matchStarted).to.be.equal(true);
         expect(client5.matchStarted).to.be.equal(true);
+
+        done();
+    });
+
+    it("should be able to send client updates to the server", function(done){
+
+        client5.Room.stateUpdate(SimpleClient.buildState(
+            SimpleClient.getVector(10,15,20),
+            SimpleClient.getVector(5,6,7),
+            [ "run", "shoot"]
+        ));
+
+        client4.Room.stateUpdate(SimpleClient.buildState(
+            SimpleClient.getVector(10,15,20),
+            SimpleClient.getVector(5,6,7),
+            [ "run", "shoot"]
+        ));
+
+        client3.Room.stateUpdate(SimpleClient.buildState(
+            SimpleClient.getVector(10,15,20),
+            SimpleClient.getVector(5,6,7),
+            [ "run", "shoot"]
+        ));
+
+        client5.Room.stateUpdate(SimpleClient.buildState(
+            SimpleClient.getVector(20,15,10),
+            SimpleClient.getVector(5,6,7),
+            [ "sit" ]
+        ));
+
+        done();
+    });
+
+    it("awaiting packets..(sul states)", function(done){
+        setTimeout(done, 200);
+    });
+
+    it("should have received state update messages by now", function(done){
+
+        expect(client.stateUpdates).to.be.equal(0);
+        expect(client2.stateUpdates).to.be.equal(0);
+
+        expect(client3.stateUpdates).not.to.be.equal(0);
+        expect(client4.stateUpdates).not.to.be.equal(0);
+        expect(client5.stateUpdates).not.to.be.equal(0);
+
+        console.log(client4.lastState);
+        done();
+    });
+
+    it("await packets.. (match end)", function(done){
+        this.timeout(config.server.sulDuration + 300);
+        setTimeout(done, config.server.sulDuration + 200);
+    });
+
+    it("should see end packets @ clients", function(done){
+
+        expect(client.matchEnded).to.be.equal(undefined);
+        expect(client2.matchEnded).to.be.equal(undefined);
+
+        expect(client3.matchEnded).not.to.be.equal(true);
+        expect(client4.matchEnded).not.to.be.equal(true);
+        expect(client5.matchEnded).not.to.be.equal(true);
+
+        console.log(client3.stateUpdates, client4.stateUpdates, client5.stateUpdates);
+
+        expect(client3.stateUpdates).to.be.equal(client4.stateUpdates);
+        expect(client4.stateUpdates).to.be.equal(client5.stateUpdates);
 
         done();
     });

@@ -18,8 +18,14 @@ const RG_IMSG = {
     SEARCH: RG_PREFIX + "SEARCH",
     LEAVE: RG_PREFIX + "LEAVE",
     CONFIRM: RG_PREFIX + "CONFIRM",
-    DISBAND: RG_PREFIX + "DISBAND",
-    START: RG_PREFIX + "START"
+    DISBAND: RG_PREFIX + "DISBAND", //emtted by server only
+    START: RG_PREFIX + "START", //emtted by server only
+    END: RG_PREFIX + "END", //emtted by server only
+
+    //client state related
+    STATE_UPDATE: RG_PREFIX + "STATE",
+    MESSAGE_UPDATE: RG_PREFIX + "MESSAGE",
+    WORLD_UPDATE: RG_PREFIX + "WORLD"
 };
 
 /**
@@ -90,6 +96,12 @@ class Client extends EventEmitter {
             }, RG_IMSG.CONFIRM);
         };
 
+        options.stateUpdate = (state) => {
+            return this._sendInternal({
+                state
+            }, RG_IMSG.STATE_UPDATE);
+        };
+
         return options;
     }
 
@@ -140,6 +152,22 @@ class Client extends EventEmitter {
 
     close(){
         this.socket.close();
+    }
+
+    static getVector(x, y, z){
+        return {
+            x,
+            y,
+            z
+        };
+    }
+
+    static buildState(position, rotation, animations){
+        return {
+            position,
+            rotation,
+            animations
+        };
     }
 
     _sendPromise(data){
