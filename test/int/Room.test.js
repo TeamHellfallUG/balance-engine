@@ -71,7 +71,7 @@ describe("RoomServer Integration", function(){
 
                     if(message.header === client.RG_IMSG.STATE_UPDATE){
                         client.stateUpdates++;
-                        client.lastState = message.message.states;
+                        client.lastState = message.content.states;
                     }
 
                     if(message.header === client.RG_IMSG.END){
@@ -102,7 +102,7 @@ describe("RoomServer Integration", function(){
 
                     if(message.header === client.RG_IMSG.CONFIRM){
                         console.log("client2 received confirm, sending confirm.");
-                        client2.Room.confirm(message.message.matchId).then(_ => {});
+                        client2.Room.confirm(message.content.matchId).then(_ => {});
                     }
 
                     if(message.header === client.RG_IMSG.START){
@@ -112,7 +112,7 @@ describe("RoomServer Integration", function(){
 
                     if(message.header === client.RG_IMSG.STATE_UPDATE){
                         client2.stateUpdates++;
-                        client2.lastState = message.message.states;
+                        client2.lastState = message.content.states;
                     }
 
                     if(message.header === client.RG_IMSG.END){
@@ -143,7 +143,7 @@ describe("RoomServer Integration", function(){
 
                     if(message.header === client.RG_IMSG.CONFIRM){
                         console.log("client3 received confirm, sending confirm.");
-                        client3.Room.confirm(message.message.matchId).then(_ => {});
+                        client3.Room.confirm(message.content.matchId).then(_ => {});
                     }
 
                     if(message.header === client.RG_IMSG.START){
@@ -153,7 +153,7 @@ describe("RoomServer Integration", function(){
 
                     if(message.header === client.RG_IMSG.STATE_UPDATE){
                         client3.stateUpdates++;
-                        client3.lastState = message.message.states;
+                        client3.lastState = message.content.states;
                     }
 
                     if(message.header === client.RG_IMSG.END){
@@ -184,7 +184,7 @@ describe("RoomServer Integration", function(){
 
                     if(message.header === client.RG_IMSG.CONFIRM){
                         console.log("client4 received confirm, sending confirm.");
-                        client4.Room.confirm(message.message.matchId).then(_ => {});
+                        client4.Room.confirm(message.content.matchId).then(_ => {});
                     }
 
                     if(message.header === client.RG_IMSG.START){
@@ -194,7 +194,7 @@ describe("RoomServer Integration", function(){
 
                     if(message.header === client.RG_IMSG.STATE_UPDATE){
                         client4.stateUpdates++;
-                        client4.lastState = message.message.states;
+                        client4.lastState = message.content.states;
                     }
 
                     if(message.header === client.RG_IMSG.END){
@@ -225,7 +225,7 @@ describe("RoomServer Integration", function(){
 
                     if(message.header === client.RG_IMSG.CONFIRM){
                         console.log("client5 received confirm, sending confirm.");
-                        client5.Room.confirm(message.message.matchId).then(_ => {});
+                        client5.Room.confirm(message.content.matchId).then(_ => {});
                     }
 
                     if(message.header === client.RG_IMSG.START){
@@ -235,7 +235,7 @@ describe("RoomServer Integration", function(){
 
                     if(message.header === client.RG_IMSG.STATE_UPDATE){
                         client5.stateUpdates++;
-                        client5.lastState = message.message.states;
+                        client5.lastState = message.content.states;
                     }
 
                     if(message.header === client.RG_IMSG.END){
