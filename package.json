@@ -1,6 +1,6 @@
 {
   "name": "balance-engine",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "main": "./index.js",
   "author": "Christian Fröhlingsdorf <chris@5cf.de>",
   "license": "MIT",
