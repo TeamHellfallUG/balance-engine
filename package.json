@@ -1,6 +1,6 @@
 {
   "name": "balance-engine",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "main": "./index.js",
   "author": "Christian Fröhlingsdorf <chris@5cf.de>",
   "license": "MIT",
@@ -16,7 +16,9 @@
     "group": "node example/group.js",
     "group-client": "node example/group-client.js",
     "vector": "node example/vector.js",
-    "vector-client": "node example/vector-client.js"
+    "vector-client": "node example/vector-client.js",
+    "roomgs": "node example/roomgs.js",
+    "pm2": "pm2 start example/roomgs.js"
   },
   "dependencies": {
     "avsc": "~4.1.11",
@@ -29,7 +31,6 @@
     "uws": "~0.13.0"
   },
   "devDependencies": {
-    "ws": "*",
     "expect.js": "~0.3.1",
     "mocha": "~3.2.0",
     "istanbul": "~0.4.2"

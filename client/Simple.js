@@ -1,4 +1,4 @@
-const ws = require("ws");
+const ws = require("uws");
 const EventEmitter = require("events");
 
 const INTERNAL = "internal";

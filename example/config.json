@@ -1,12 +1,20 @@
 {
     "server": {
+
+        "host": "0.0.0.0",
         "port": 8443,
+        "debug": false,
+
         "redis": {
             "host": "localhost",
             "port": 6379,
             "family": 4,
             "db": 0,
-            "prefix": "thf:wes:"
-        }
+            "keyPrefix": "thf:wes:"
+        },
+
+        "lobbySize": 6,
+        "sulHertz": 24,
+        "sulDuration": 600000
     }
 }
