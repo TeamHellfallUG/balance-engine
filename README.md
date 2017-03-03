@@ -16,4 +16,4 @@
 
 # other info
 -  some parts are still wip
-- a Unity3D C# Client Library is available under "krystianity/balance-client"
+- a Unity3D C# Client Library is available under: ["krystianity/balance-client"](https://github.com/krystianity/balance-client)
