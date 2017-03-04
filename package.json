@@ -1,6 +1,6 @@
 {
   "name": "balance-engine",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "./index.js",
   "author": "Christian Fröhlingsdorf <chris@5cf.de>",
   "license": "MIT",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "avsc": "~4.1.11",
+    "bluebird": "~3.5.0",
     "http-proxy": "~1.16.2",
     "ioredis": "~2.5.0",
     "merkury": "~1.1.0",

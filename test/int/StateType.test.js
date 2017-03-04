@@ -1,5 +1,6 @@
 const expect = require("expect.js");
 const ioredis = require("ioredis");
+const Promise = require("bluebird");
 
 const {State} = require("./../../lib/dto/index.js");
 

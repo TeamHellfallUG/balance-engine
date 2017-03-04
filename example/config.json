@@ -13,8 +13,8 @@
             "keyPrefix": "thf:wes:"
         },
 
-        "lobbySize": 6,
-        "sulHertz": 24,
+        "lobbySize": 2,
+        "sulHertz": 20,
         "sulDuration": 600000
     }
 }
