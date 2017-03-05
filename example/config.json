@@ -13,6 +13,12 @@
             "keyPrefix": "thf:wes:"
         },
 
+        "udp": {
+            "host": "0.0.0.0",
+            "port": 9443,
+            "debug": false
+        },
+
         "lobbySize": 2,
         "sulHertz": 20,
         "sulDuration": 600000
