@@ -10,17 +10,31 @@
             "port": 6379,
             "family": 4,
             "db": 0,
-            "keyPrefix": "thf:wes:"
+            "keyPrefix": "thf:wes:t:"
         },
 
-        "udp": {
-            "host": "0.0.0.0",
-            "port": 9443,
-            "debug": false
-        },
-
+        "log": null,
+        "engine": "uws",
         "lobbySize": 2,
         "sulHertz": 20,
         "sulDuration": 600000
+    },
+
+    "udp": {
+
+        "host": "0.0.0.0",
+        "port": 9443,
+        "debug": false,
+
+        "redis": {
+            "host": "localhost",
+            "port": 6379,
+            "family": 4,
+            "db": 0,
+            "keyPrefix": "thf:wes:u:"
+        },
+
+        "log": null,
+        "engine": "udpws"
     }
 }

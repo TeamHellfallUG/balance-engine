@@ -1,6 +1,6 @@
 {
   "name": "balance-engine",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "main": "./index.js",
   "author": "Christian Fröhlingsdorf <chris@5cf.de>",
   "license": "MIT",
@@ -18,16 +18,17 @@
     "vector": "node example/vector.js",
     "vector-client": "node example/vector-client.js",
     "roomgs": "node example/roomgs.js",
-    "pm2": "pm2 start example/roomgs.js"
+    "pm2": "pm2 start example/roomgs.js",
+    "udp-client": "node example/udp-client.js"
   },
   "dependencies": {
-    "avsc": "~4.1.11",
+    "avsc": "~5.0.0",
     "bluebird": "~3.5.0",
     "http-proxy": "~1.16.2",
     "ioredis": "~2.5.0",
     "merkury": "~1.1.0",
-    "request": "~2.79.0",
-    "udpws": "~0.5.0",
+    "request": "~2.81.0",
+    "udpws": "~1.0.1",
     "uuid": "~3.0.1",
     "uws": "~0.13.0"
   },

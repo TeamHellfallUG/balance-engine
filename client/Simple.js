@@ -1,5 +1,8 @@
 const ws = require("uws");
 const EventEmitter = require("events");
+const udpws = require("udpws");
+
+const UDPSimple = require("./UDPSimple.js");
 
 const INTERNAL = "internal";
 const PREFIX = "GS:";
@@ -34,7 +37,7 @@ const RG_IMSG = {
  */
 class Client extends EventEmitter {
 
-    constructor({host, port, log}){
+    constructor({host, port, log}, udpConf = {host: "localhost", port: 11443}){
         super();
         this.conStr = `ws://${host}:${port}`;
         this.socket = null;
@@ -42,6 +45,11 @@ class Client extends EventEmitter {
 
         this.Group = this._getGroupOptions();
         this.Room = this._getRoomOptions();
+
+        this.identification = null;
+
+        this.udp = null;
+        this.udpConf = udpConf;
 
         this.IMSG = IMSG;
         this.RG_IMSG = RG_IMSG;
@@ -102,6 +110,20 @@ class Client extends EventEmitter {
             }, RG_IMSG.STATE_UPDATE);
         };
 
+        options.udpStateUpdate = (state) => {
+
+            if(!this.udp){
+                throw new Error("udp sub-client not initialised.");
+            }
+
+            return this.udp.sendUdpPacket(RG_IMSG.STATE_UPDATE, {
+                state,
+                tid: this.identification,
+                gid: this.us_gid,
+                uid: this.us_uid
+            });
+        };
+
         return options;
     }
 
@@ -151,7 +173,12 @@ class Client extends EventEmitter {
     }
 
     close(){
+
         this.socket.close();
+
+        if(this.udp){
+            this.udp.close();
+        }
     }
 
     static getVector(x, y, z){
@@ -189,6 +216,24 @@ class Client extends EventEmitter {
         });
     }
 
+    spawnUdpSubClient(id, groupId){
+
+        this.us_uid = id;
+        this.us_gid = groupId;
+
+        this.log(`spawning udp sub client for id ${id} and group ${groupId}.`);
+
+        this.udp = new UDPSimple(this.udpConf);
+
+        this.udp.on("ready", r => {
+            this.emit("udp-ready", r);
+        });
+
+        this.udp.on("message", message => {
+            this.emit("udp-message", message);
+        });
+    }
+
     _attachInternalListeners(){
 
         this.socket.on("message", message => {
@@ -203,6 +248,24 @@ class Client extends EventEmitter {
 
             if(jmessage){
                 super.emit("jmessage", jmessage);
+
+                if(jmessage.type === "internal"){
+
+                    switch(jmessage.header){
+
+                        case "J:IDENTIFICATION":
+                            this.identification = jmessage.content.id;
+                            this.log(`received identification: ${this.identification}.`);
+                            break;
+
+                        case "RGS:MESSAGE":
+                            const id = jmessage.content.identifier;
+                            const groupId = jmessage.content.groupId;
+                            this.spawnUdpSubClient(id, groupId);
+                            break;
+                    }
+                }
+
                 return;
             }
 

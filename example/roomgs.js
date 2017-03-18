@@ -4,10 +4,10 @@ const config = require("./config.json");
 
 uhecatcher(console.log);
 
-const serverConfig = JSON.parse(JSON.stringify(config.server));
-serverConfig.log = console.log;
+config.server.log = console.log;
+config.udp.log = console.log;
 
-const server = new RoomGroupServer(serverConfig);
+const server = new RoomGroupServer(config);
 server.open().then(() => {
 
     console.log("open.");

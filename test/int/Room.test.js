@@ -5,14 +5,17 @@ const config = require("./test-config.json");
 
 describe("RoomServer Integration", function(){
 
-    const serverConfig = JSON.parse(JSON.stringify(config.server));
-    serverConfig.log = (msg) => {
+    config.server.log = (msg) => {
+        console.log("server: " + msg);
+    };
+
+    config.udp.log = (msg) => {
         console.log("server: " + msg);
     };
 
     const clientConfig = {
         host: "localhost",
-        port: serverConfig.port,
+        port: config.server.port,
         log: (msg) => {
             console.log("client: " + msg);
         }
@@ -27,7 +30,7 @@ describe("RoomServer Integration", function(){
 
     it("should be able to start the room group server", function(done){
 
-        server = new RoomGroupServer(serverConfig);
+        server = new RoomGroupServer(config);
         server.open().then(() => {
 
             server.on("connection", client => {
@@ -53,6 +56,10 @@ describe("RoomServer Integration", function(){
         client = new SimpleClient(clientConfig);
         client.stateUpdates = 0;
         client.open().then(() => {
+
+            client.on("udp-ready", () => {
+                client.isUdpReady = true;
+            });
 
             client.on("jmessage", message => {
                 console.log("client1: " + JSON.stringify(message));
@@ -95,6 +102,10 @@ describe("RoomServer Integration", function(){
         client2.stateUpdates = 0;
         client2.open().then(() => {
 
+            client2.on("udp-ready", () => {
+                client2.isUdpReady = true;
+            });
+
             client2.on("jmessage", message => {
                 console.log("client2: " + JSON.stringify(message));
 
@@ -135,6 +146,10 @@ describe("RoomServer Integration", function(){
         client3 = new SimpleClient(clientConfig);
         client3.stateUpdates = 0;
         client3.open().then(() => {
+
+            client3.on("udp-ready", () => {
+                client3.isUdpReady = true;
+            });
 
             client3.on("jmessage", message => {
                 console.log("client3: " + JSON.stringify(message));
@@ -177,6 +192,10 @@ describe("RoomServer Integration", function(){
         client4.stateUpdates = 0;
         client4.open().then(() => {
 
+            client4.on("udp-ready", () => {
+                client4.isUdpReady = true;
+            });
+
             client4.on("jmessage", message => {
                 console.log("client4: " + JSON.stringify(message));
 
@@ -217,6 +236,10 @@ describe("RoomServer Integration", function(){
         client5 = new SimpleClient(clientConfig);
         client5.stateUpdates = 0;
         client5.open().then(() => {
+
+            client5.on("udp-ready", () => {
+                client5.isUdpReady = true;
+            });
 
             client5.on("jmessage", message => {
                 console.log("client5: " + JSON.stringify(message));
@@ -322,27 +345,43 @@ describe("RoomServer Integration", function(){
         done();
     });
 
+    it("awaiting packets..(udp connection)", function(done){
+        setTimeout(done, 500);
+    });
+
+    it("3 clients should have udp connections ready", function(done){
+
+        expect(client.isUdpReady).to.be.equal(undefined);
+        expect(client2.isUdpReady).to.be.equal(undefined);
+
+        expect(client3.isUdpReady).to.be.equal(true);
+        expect(client4.isUdpReady).to.be.equal(true);
+        expect(client5.isUdpReady).to.be.equal(true);
+
+        done();
+    });
+
     it("should be able to send client updates to the server", function(done){
 
-        client5.Room.stateUpdate(SimpleClient.buildState(
+        client5.Room.udpStateUpdate(SimpleClient.buildState(
             SimpleClient.getVector(10,15,20),
             SimpleClient.getVector(5,6,7),
             [ "run", "shoot"]
         ));
 
-        client4.Room.stateUpdate(SimpleClient.buildState(
+        client4.Room.udpStateUpdate(SimpleClient.buildState(
             SimpleClient.getVector(10,15,20),
             SimpleClient.getVector(5,6,7),
             [ "run", "shoot"]
         ));
 
-        client3.Room.stateUpdate(SimpleClient.buildState(
+        client3.Room.udpStateUpdate(SimpleClient.buildState(
             SimpleClient.getVector(10,15,20),
             SimpleClient.getVector(5,6,7),
             [ "run", "shoot"]
         ));
 
-        client5.Room.stateUpdate(SimpleClient.buildState(
+        client5.Room.udpStateUpdate(SimpleClient.buildState(
             SimpleClient.getVector(20,15,10),
             SimpleClient.getVector(5,6,7),
             [ "sit" ]

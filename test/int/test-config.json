@@ -1,5 +1,6 @@
 {
   "server": {
+
     "port": 12443,
 
     "redis": {
@@ -7,16 +8,26 @@
       "port": 6379,
       "family": 4,
       "db": 0,
-      "keyPrefix": "thf:wes:test:"
+      "keyPrefix": "thf:wes:t:test:"
     },
 
-    "udp": {
-      "host": "0.0.0.0",
-      "port": 11443,
-      "debug": false
-    },
-
+    "debug": true,
     "sulHertz": 24,
     "sulDuration": 4000
+  },
+
+  "udp": {
+
+    "host": "0.0.0.0",
+    "port": 11443,
+    "debug": true,
+
+    "redis": {
+      "host": "localhost",
+      "port": 6379,
+      "family": 4,
+      "db": 0,
+      "keyPrefix": "thf:wes:u:test:"
+    }
   }
 }
