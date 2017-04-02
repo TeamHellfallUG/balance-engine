@@ -48,7 +48,7 @@ class UDPTest extends EventEmitter {
                 }
             }
 
-            this.log("client message: " + message);
+            //this.log("client message: " + message);
             this.emit("message", message);
         });
 

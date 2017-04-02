@@ -230,7 +230,7 @@ class Client extends EventEmitter {
         });
 
         this.udp.on("message", message => {
-            this.emit("udp-message", message);
+            this.emit("jmessage", message);
         });
     }
 

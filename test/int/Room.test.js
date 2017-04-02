@@ -383,8 +383,8 @@ describe("RoomServer Integration", function(){
 
         client5.Room.udpStateUpdate(SimpleClient.buildState(
             SimpleClient.getVector(20,15,10),
-            SimpleClient.getVector(5,6,7),
-            [ "sit" ]
+            SimpleClient.getVector(1,2,3),
+            [ "sit", "jump" ]
         ));
 
         done();
