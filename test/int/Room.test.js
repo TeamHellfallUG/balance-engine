@@ -407,6 +407,14 @@ describe("RoomServer Integration", function(){
         done();
     });
 
+    it("should be able to get server info", function(done){
+        const info = server.getServerInfo();
+        expect(info).not.to.be.equal(null);
+        expect(typeof info).to.be.equal("object");
+        console.log(info);
+        done();
+    });
+
     it("await packets.. (match end)", function(done){
         this.timeout(config.server.sulDuration + 300);
         setTimeout(done, config.server.sulDuration + 200);
