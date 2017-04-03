@@ -366,28 +366,32 @@ describe("RoomServer Integration", function(){
         client5.Room.udpStateUpdate(SimpleClient.buildState(
             SimpleClient.getVector(10,15,20),
             SimpleClient.getVector(5,6,7),
-            [ "run", "shoot"]
+            [ "run1", "shoot"]
         ));
 
         client4.Room.udpStateUpdate(SimpleClient.buildState(
             SimpleClient.getVector(10,15,20),
             SimpleClient.getVector(5,6,7),
-            [ "run", "shoot"]
+            [ "run2", "shoot"]
         ));
 
         client3.Room.udpStateUpdate(SimpleClient.buildState(
             SimpleClient.getVector(10,15,20),
             SimpleClient.getVector(5,6,7),
-            [ "run", "shoot"]
+            [ "run3", "shoot"]
         ));
 
-        client5.Room.udpStateUpdate(SimpleClient.buildState(
-            SimpleClient.getVector(20,15,10),
-            SimpleClient.getVector(1,2,3),
-            [ "sit", "jump" ]
-        ));
+        setTimeout(() => {
 
-        done();
+            //TODO why is this message never prossesd in state update logic
+            client5.Room.udpStateUpdate(SimpleClient.buildState(
+                SimpleClient.getVector(20,15,10),
+                SimpleClient.getVector(1,2,3),
+                [ "run4", "jump" ]
+            ));
+
+            done();
+        }, 50);
     });
 
     it("awaiting packets..(sul states)", function(done){
