@@ -1,4 +1,7 @@
 # balance-engine
+
+[![Build Status](https://travis-ci.org/krystianity/balance-engine.svg?branch=master)](https://travis-ci.org/krystianity/balance-engine)
+
 - Scalable Game Server Framework
 - Interchangeable Protocols (currently UDP and TCP(WebSockets))
 - Adds complexity via inheritance
