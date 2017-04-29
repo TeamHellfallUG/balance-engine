@@ -1,5 +1,7 @@
 # balance-engine
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/krystianity/balance-engine.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/krystianity/balance-engine.svg?branch=master)](https://travis-ci.org/krystianity/balance-engine)
 
 - Scalable Game Server Framework
