@@ -8,6 +8,9 @@ const JsonMessageLayerServer = require("./lib/JsonMessageLayerServer.js");
 const VectorGroupServer = require("./lib/VectorGroupServer.js");
 const RoomGroupServer = require("./lib/RoomGroupServer.js");
 
+const ServiceRegistry = require("./lib/http/ServiceRegistry.js");
+const ServiceRegistryClient = require("./lib/http/ServiceRegistryClient.js");
+
 const SimpleClient = require("./client/Simple.js");
 
 module.exports = {
@@ -18,5 +21,7 @@ module.exports = {
     JsonMessageLayerServer,
     SimpleClient,
     VectorGroupServer,
-    RoomGroupServer
+    RoomGroupServer,
+    ServiceRegistry,
+    ServiceRegistryClient
 };

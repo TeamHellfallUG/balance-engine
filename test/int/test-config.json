@@ -29,5 +29,11 @@
       "db": 0,
       "keyPrefix": "thf:wes:u:test:"
     }
+  },
+
+  "registry": {
+    "host": "localhost",
+    "port": 17415,
+    "authorization": "test-auth-key"
   }
 }
