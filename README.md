@@ -2,7 +2,7 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/krystianity/balance-engine.svg)](https://greenkeeper.io/)
 
-
+[![CircleCI](https://circleci.com/gh/krystianity/balance-engine/tree/master.svg?style=svg)](https://circleci.com/gh/krystianity/balance-engine/tree/master)
 
 - Scalable Game Server Framework
 - Interchangeable Protocols (currently UDP and TCP(WebSockets))
