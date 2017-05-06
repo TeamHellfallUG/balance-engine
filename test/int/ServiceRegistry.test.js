@@ -11,8 +11,11 @@ describe("ServiceRegistry/Client Integration", function(){
     const service = {
         name: "straeter",
         zone: "us-central1-c",
-        ip: "192.168.1.2",
-        port: 1337
+        host: "192.168.1.2",
+        ports: {
+            tcp: 1337,
+            udp: 1447
+        }
     };
 
     before(function(done){
@@ -40,7 +43,7 @@ describe("ServiceRegistry/Client Integration", function(){
 
     it("should be able to register service", function(){
 
-        return client.register(service.name, service.zone, service.ip, service.port).then(result => {
+        return client.register(service.name, service.zone, service.host, service.ports).then(result => {
             console.log(result);
             return true;
         });
@@ -50,7 +53,7 @@ describe("ServiceRegistry/Client Integration", function(){
 
         return client.list("*").then(list => {
             console.log(list);
-            expect(list[0].ip).to.be.equal(service.ip);
+            expect(list[0].host).to.be.equal(service.host);
             return true;
         });
     });

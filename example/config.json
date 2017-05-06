@@ -36,5 +36,11 @@
 
         "log": null,
         "engine": "udpws"
+    },
+
+    "registry": {
+        "host": "localhost",
+        "port": 15415,
+        "authorization": "very-secret-key"
     }
 }
