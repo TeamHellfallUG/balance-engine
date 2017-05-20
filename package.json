@@ -27,7 +27,7 @@
     "body-parser": "~1.17.1",
     "express": "~4.15.2",
     "http-proxy": "~1.16.2",
-    "ioredis": "~2.5.0",
+    "ioredis": "~3.0.0",
     "merkury": "~1.1.0",
     "request": "~2.81.0",
     "udpws": "~1.0.1",
