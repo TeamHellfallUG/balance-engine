@@ -4,6 +4,7 @@
   "main": "./index.js",
   "author": "Christian Fröhlingsdorf <chris@5cf.de>",
   "license": "MIT",
+  "description": "server side game engine framework",
   "scripts": {
     "start": "node example/single.js",
     "test": "istanbul cover _mocha -- --recursive -R spec test && istanbul check-coverage --statements 45",
