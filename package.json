@@ -33,7 +33,7 @@
     "request": "~2.81.0",
     "udpws": "~1.0.1",
     "uuid": "~3.0.1",
-    "uws": "~0.14.1"
+    "uws": "~8.14.0"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
