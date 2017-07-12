@@ -4,6 +4,7 @@
   "main": "./index.js",
   "author": "Christian Fröhlingsdorf <chris@5cf.de>",
   "license": "MIT",
+  "description": "server side game engine framework",
   "scripts": {
     "start": "node example/single.js",
     "test": "istanbul cover _mocha -- --recursive -R spec test && istanbul check-coverage --statements 45",
@@ -32,7 +33,7 @@
     "request": "~2.81.0",
     "udpws": "~1.0.1",
     "uuid": "~3.1.0",
-    "uws": "~0.14.1"
+    "uws": "~8.14.0"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
