@@ -32,7 +32,7 @@
     "merkury": "~1.1.0",
     "request": "~2.81.0",
     "udpws": "~1.0.1",
-    "uuid": "~3.0.1",
+    "uuid": "~3.1.0",
     "uws": "~8.14.0"
   },
   "devDependencies": {
