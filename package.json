@@ -7,7 +7,7 @@
   "description": "server side game engine framework",
   "scripts": {
     "start": "node example/single.js",
-    "test": "istanbul cover _mocha -- --recursive -R spec test && istanbul check-coverage --statements 45",
+    "test": "istanbul cover _mocha -- --recursive --exit -R spec test && istanbul check-coverage --statements 45",
     "client": "node example/client.js",
     "proxy": "node example/multi.js proxy",
     "server": "node example/multi.js server",
