@@ -23,7 +23,7 @@
     "udp-client": "node example/udp-client.js"
   },
   "dependencies": {
-    "avsc": "~5.0.0",
+    "avsc": "~6.0.0-alpha.2",
     "bluebird": "~3.5.0",
     "body-parser": "~1.18.0",
     "express": "~5.0.0-alpha.6",
