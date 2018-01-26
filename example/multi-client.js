@@ -1,4 +1,4 @@
-const ws = require("ws");
+const ws = require("uws");
 const config = require("./config.json");
 const server = "wss://localhost:" + config.server.port;
 
